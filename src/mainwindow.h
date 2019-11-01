@@ -18,7 +18,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    void save_text(QString);
+    void save_settings();
     QString load_text();
     QString get_path();
 

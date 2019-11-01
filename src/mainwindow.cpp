@@ -5,6 +5,7 @@
 #include <QMessageLogger>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QSettings>
 
 #include <iostream>
 
@@ -14,7 +15,18 @@
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     setupUi(this);
-    QString text = load_text();
+
+    QCoreApplication::setOrganizationName("moroen");
+    QCoreApplication::setOrganizationDomain("moroen.com");
+    QCoreApplication::setApplicationName("SimpleNote");
+
+    QSettings settings;
+
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+
+    QString text = settings.value("contents").toString();
+
+    // QString text = load_text();
     plainTextEdit->setPlainText(text);
 }
 
@@ -33,7 +45,8 @@ QString MainWindow::get_path() {
     return path;
 }
 
-void MainWindow::save_text(QString text) {
+void MainWindow::save_settings() {
+    /* 
     QString path;
     path = get_path();
 
@@ -44,26 +57,19 @@ void MainWindow::save_text(QString text) {
     } else {
         QTextStream out(&file); out << text;
         file.close();
-    }
+    }*/
+
+    QSettings settings;
+    QString text = plainTextEdit->toPlainText();
+    settings.setValue("contents", text);
 };
 
-QString MainWindow::load_text(void) {
-    QString fileName = get_path();
-    QFile file(fileName);
-
-    file.open(QIODevice::Text | QIODevice::ReadOnly);
-    QString content;
-    while(!file.atEnd())
-        content.append(file.readLine());
-
-    file.close();
-
-    return content;   
-};
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QString text;
-    text  = plainTextEdit->toPlainText();
-    save_text(text);
+    QSettings settings;
+
+    settings.setValue("MainWindow/geometry", saveGeometry());
+    // settings.setValue("windowState", saveState());
+    save_settings();
 };
