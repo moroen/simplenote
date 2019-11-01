@@ -7,7 +7,7 @@
 //! [0]
 
 //! [1]
-class MainWindow : public QWidget, private Ui::MainWindow
+class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
 

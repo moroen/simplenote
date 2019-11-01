@@ -12,7 +12,7 @@
 #include "mainwindow.h"
 
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow()
 {
     setupUi(this);
 
