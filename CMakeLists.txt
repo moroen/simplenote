@@ -39,3 +39,5 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 )
 
 qt5_use_modules(${PROJECT_NAME} Widgets)
+
+install(TARGETS snote)
